@@ -212,9 +212,9 @@ module Tus
     def validate_content_length!(current_offset, length)
       if length
         error!(403, "Cannot modify completed upload") if current_offset == length
-        error!(413, "Size of this chunk surpasses Upload-Length") if Integer(request.content_length) + current_offset > length
+        error!(413, "Size of this chunk surpasses Upload-Length") if request.content_length && Integer(request.content_length) + current_offset > length
       elsif max_size
-        error!(413, "Size of this chunk surpasses Tus-Max-Size") if Integer(request.content_length) + current_offset > max_size
+        error!(413, "Size of this chunk surpasses Tus-Max-Size") if request.content_length && Integer(request.content_length) + current_offset > max_size
       end
     end
 
